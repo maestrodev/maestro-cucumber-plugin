@@ -1,6 +1,6 @@
 [{
-    "name" : "cucumber plugin",
-    "description" : "Run Cucumber tests. [features] The directory or file containing the features.<br>[tags] Only execute the features or scenarios with matching tags<br>[profile] the cucumber profile to use as defined in cucumber.yml<br>[strict] enable/disable strict mode<br>",
+    "name" : "in-process cucumber",
+    "description" : "Run Cucumber tests within the agent process. [features] The directory or file containing the features.<br>[tags] Only execute the features or scenarios with matching tags<br>[profile] the cucumber profile to use as defined in cucumber.yml<br>[strict] enable/disable strict mode<br>",
     "license" : "Apache 2.0",
     "author": "Etienne Pelletier",
     "version": "1.0-SNAPSHOT",
@@ -13,7 +13,7 @@
       "features":{"required":false,"type":"String","value":""},
 		  "tags":{"required":false,"type":"Array","value":[]},
 		  "profile":{"required":false,"type":"String","value":""},
-		  "strict":{"required":false,"type":"Boolean","value":false},
+		  "strict":{"required":false,"type":"Boolean","value":false}
 	  },
       "outputs" : {"output" : {"type" : "String"}},
       "tool_name":"Test",
@@ -21,4 +21,35 @@
     },
     "source_types": [
     ]
-}]
+},
+  {
+    "name" : "forked cucumber",
+    "description" : "Run Cucumber tests in a forked process. [features] The directory or file containing the features.<br>[tags] Only execute the features or scenarios with matching tags<br>[profile] the cucumber profile to use as defined in cucumber.yml<br>[strict] enable/disable strict mode<br>",
+    "license" : "Apache 2.0",
+    "author": "Etienne Pelletier",
+    "version": "1.0-SNAPSHOT",
+    "class": "MaestroDev::ForkedCucumberWorker",
+    "type":"ruby",
+    "dependencies":[ ],
+    "task":{
+      "command" : "/forkedcucumberplugin/run",
+      "inputs" :  {
+        "path":{"required":true,"type":"String","value":""},
+        "use_rvm":{"required":false,"type":"Boolean","value":false},
+        "ruby_version":{"required":false,"type":"String","value":""},
+        "rubygems_version":{"required":false,"type":"String","value":""},
+        "use_bundler":{"required":false,"type":"Boolean","value":false},
+        "environment":{"required":false,"type":"String","value":""},
+        "gems":{"required":false,"type":"Array","value":[]},
+        "features":{"required":false,"type":"String","value":""},
+        "tags":{"required":false,"type":"Array","value":[]},
+        "profile":{"required":false,"type":"String","value":""},
+        "strict":{"required":false,"type":"Boolean","value":false}
+      },
+      "outputs" : {"output" : {"type" : "String"}},
+      "tool_name":"Test",
+      "icon": "cucumber.png"
+    },
+    "source_types": [
+    ]
+  }]

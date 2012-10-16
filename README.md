@@ -8,6 +8,7 @@ webkit gems.
 Manifest:
 
 * src/cucumber_worker.rb
+* src/forked_cucumber_worker.rb
 * src/maestro_formatter.rb
 * images/cucumber.png
 * manifest.json

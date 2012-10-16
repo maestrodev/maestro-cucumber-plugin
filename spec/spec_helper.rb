@@ -24,6 +24,7 @@ $LOAD_PATH.unshift(File.dirname(__FILE__) + '/../src') unless $LOAD_PATH.include
 RSpec::Mocks::setup(self)
 
 require 'src/cucumber_worker'
+require 'src/forked_cucumber_worker'
 
 RSpec.configure do |config|
 

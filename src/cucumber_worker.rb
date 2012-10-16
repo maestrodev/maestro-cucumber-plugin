@@ -9,11 +9,12 @@ module MaestroDev
     attr_reader :args
 
     def setup
+      fields = workitem['fields']
       Cucumber::Formatter::WorkerIo.worker=self
-      features = workitem['fields']['features']
-      tags = (workitem['fields']['tags'] || [])
-      profile = (workitem['fields']['profile'] || "")
-      strict = workitem['fields']['strict']
+      features = fields['features']
+      tags = (fields['tags'] || [])
+      profile = (fields['profile'] || "")
+      strict = Boolean(fields['strict']) || false
 
       cucumber_opts = ["--format", "Cucumber::Formatter::MaestroFormatter"]
 
@@ -30,12 +31,6 @@ module MaestroDev
 
     def validate_inputs
       write_output "Validating Inputs\n"
-      #if workitem['fields']['port'].nil? or workitem['fields']['port'] == 0
-      #  workitem['fields']['port'] = workitem['fields']['use_ssl'] ? 443 : 80
-      #end
-      #
-      #raise "Missing Field Host" if workitem['fields']['host'].nil? or workitem['fields']['host'].empty?
-      #raise "Missing Field Job" if workitem['fields']['job'].nil? or workitem['fields']['job'].empty?
     end
 
     def run
