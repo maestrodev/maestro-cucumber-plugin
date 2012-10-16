@@ -1,0 +1,88 @@
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.maestrodev</groupId>
+  <artifactId>maestro-cucumber-plugin</artifactId>
+  <version>1.0-SNAPSHOT</version>
+  <name>Maestro Cucumber Plugin</name>
+  <description>Maestro Plugin For Running Cucumber</description>
+
+  <scm>
+    <connection>scm:git:ssh://git@github.com/maestrodev/maestro-cucumber-plugin.git</connection>
+    <developerConnection>scm:git:ssh://git@github.com/maestrodev/maestro-cucumber-plugin.git</developerConnection>
+    <url>https://github.com/maestrodev/maestro-cucumber-plugin</url>
+  </scm>
+  
+  <repositories>
+    <repository>
+      <id>java.net</id>
+      <url>http://download.java.net/maven/2/</url>
+    </repository>
+  </repositories>
+
+  <distributionManagement>
+    <repository>
+      <id>maestro-deploy</id>
+      <url>https://repo.maestrodev.com/archiva/repository/com.maestrodev.lucee.releases/</url>
+    </repository>
+    <snapshotRepository>
+      <id>maestrodev-snapshots</id>
+      <url>https://repo.maestrodev.com/archiva/repository/com.maestrodev.lucee.snapshots/</url>
+    </snapshotRepository>
+  </distributionManagement>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-deploy-plugin</artifactId>
+        <version>2.6</version>
+        <configuration>
+          <groupId>${project.groupId}</groupId>
+          <artifactId>${project.artifactId}</artifactId>
+          <version>${project.version}</version>
+          <classifier>bin</classifier>
+          <url>${repository.url}</url>
+          <file>maestro-cucumber-plugin-${project.version}.zip</file>
+          <uniqueVersion>true</uniqueVersion>
+          <packaging>zip</packaging>
+          <repositoryId>maestro-deploy</repositoryId>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+  <profiles>
+    <profile>
+      <id>release</id>
+      <properties>
+        <repository.url>https://repo.maestrodev.com/archiva/repository/com.maestrodev.lucee.releases/</repository.url>
+      </properties>
+      <build>
+        <plugins>
+          <plugin>
+            <artifactId>maven-enforcer-plugin</artifactId>
+            <version>1.0.1</version>
+            <executions>
+              <execution>
+                <id>enforce-no-snapshots</id>
+                <goals>
+                  <goal>enforce</goal>
+                </goals>
+                <configuration>
+                  <rules>
+                    <requireReleaseVersion>
+                      <message>No Snapshots Allowed!</message>
+                    </requireReleaseVersion>
+                  </rules>
+                  <fail>true</fail>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
+  <properties>
+    <repository.url>https://repo.maestrodev.com/archiva/repository/com.maestrodev.lucee.snapshots/</repository.url>
+  </properties>
+</project>

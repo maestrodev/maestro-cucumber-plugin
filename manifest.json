@@ -1,0 +1,24 @@
+[{
+    "name" : "cucumber plugin",
+    "description" : "Run Cucumber tests. [features] The directory or file containing the features.<br>[tags] Only execute the features or scenarios with matching tags<br>[profile] the cucumber profile to use as defined in cucumber.yml<br>[strict] enable/disable strict mode<br>",
+    "license" : "Apache 2.0",
+    "author": "Etienne Pelletier",
+    "version": "1.0-SNAPSHOT",
+    "class": "MaestroDev::CucumberWorker",
+    "type":"ruby",
+    "dependencies":[ ],
+    "task":{
+      "command" : "/cucumberplugin/run",
+      "inputs" :  {
+      "features":{"required":false,"type":"String","value":""},
+		  "tags":{"required":false,"type":"Array","value":[]},
+		  "profile":{"required":false,"type":"String","value":""},
+		  "strict":{"required":false,"type":"Boolean","value":false},
+	  },
+      "outputs" : {"output" : {"type" : "String"}},
+      "tool_name":"Test",
+      "icon": "cucumber.png"
+    },
+    "source_types": [
+    ]
+}]

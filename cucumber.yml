@@ -1,0 +1,3 @@
+default: -f pretty -o ./pretty.out
+
+testprofile: -f pretty
