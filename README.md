@@ -1,6 +1,7 @@
-# maestro-jenkins-plugin
+# maestro-cucumber-plugin
 Maestro plugin providing a "task" to run cucumber tests. This
-plugin is a Ruby-based deployable that gets delivered as a Zip file.
+plugin is a Ruby-based deployable that gets delivered as a Zip file. It also contains the capybara and capybara
+webkit gems.
 
 <http://cukes.info/>
 
@@ -14,16 +15,12 @@ Manifest:
 * README.md (this file)
 
 ## The Task
-This Jenkins plugin requires a few inputs:
+This Cucumber plugin allows a few inputs:
 
-
-
-* **host** (hostname of the jenkins server)
-* **port** (port jenkins is bound to)
-* **use_ssl** (to https or not)
-* **web_path** (context path of jenkins app)
-* **scm_url** (where do we get some code?)
-* **steps** (what do we do to the code?)
+* **feature** The directory or file containing the features.
+* **tags** Only execute the features or scenarios with matching tags
+* **profile** the cucumber profile to use as defined in cucumber.yml
+* **strict** enable/disable strict mode
 
 
 ## License
