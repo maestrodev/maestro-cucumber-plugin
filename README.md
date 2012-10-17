@@ -1,7 +1,11 @@
 # maestro-cucumber-plugin
-Maestro plugin providing a "task" to run cucumber tests. This
-plugin is a Ruby-based deployable that gets delivered as a Zip file. It also contains the capybara and capybara
-webkit gems.
+Maestro plugin providing "tasks" to run cucumber tests. This plugin is a Ruby-based deployable that gets delivered as a
+Zip file. It also contains the capybara gem to be used by the in-process cucumber task.
+
+This plugin provides two tasks:
+
+  * **In-process cucumber** runs cucumber within the agent process.
+  * **Forked cucmber** runs cucumber as a forked process.
 
 <http://cukes.info/>
 
@@ -15,13 +19,25 @@ Manifest:
 * LICENSE
 * README.md (this file)
 
-## The Task
-This Cucumber plugin allows a few inputs:
+## The Tasks
+The in-process cucumber task allows the following inputs:
 
 * **feature** The directory or file containing the features.
 * **tags** Only execute the features or scenarios with matching tags
-* **profile** the cucumber profile to use as defined in cucumber.yml
 * **strict** enable/disable strict mode
+
+The forked cucumber task allows the following inputs:
+
+* **feature** The directory or file containing the features.
+* **tags** Only execute the features or scenarios with matching tags
+* **profile** the cucumber profile to use, as defined in cucumber.yml
+* **strict** enable/disable strict mode
+* **path** the path from which to run cucumber.
+* **use_rvm** tell the agent to use rvm.
+* **ruby_version** the version of ruby to use.
+* **rubygems_version** the version of rubygems to use.
+* **use_bundler** tell the agent to use bundler (bundle exec).
+* **environment** environment variables
 
 
 ## License
