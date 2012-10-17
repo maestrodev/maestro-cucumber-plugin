@@ -1,9 +1,12 @@
+# Copyright 2012© MaestroDev.  All rights reserved.
 require 'rubygems'
 require 'maestro_agent'
 require 'cucumber/cli/main'
 require 'maestro_formatter'
 
 module MaestroDev
+
+  # This class is worker used to run Cucumber tests within the agent process.
   class CucumberWorker < Maestro::MaestroWorker
 
     attr_reader :args
@@ -13,16 +16,12 @@ module MaestroDev
       Cucumber::Formatter::WorkerIo.worker=self
       features = fields['features']
       tags = (fields['tags'] || [])
-      profile = (fields['profile'] || "")
-      strict = Boolean(fields['strict']) || false
+      strict = Boolean(fields['strict'])
 
-      cucumber_opts = ["--format", "Cucumber::Formatter::MaestroFormatter"]
+      cucumber_opts = %w(--format Cucumber::Formatter::MaestroFormatter)
 
-      tags.each do |tag|
-        cucumber_opts.push("--tags", tag) unless tag.empty?
-      end
+      tags.each { |tag| cucumber_opts.push("--tags", tag) unless tag.empty? }
 
-      cucumber_opts.push("--profile", profile) unless profile.empty?
       cucumber_opts.push("--strict") if strict
 
       @args = (cucumber_opts + feature_files(features)).flatten.compact
@@ -33,7 +32,7 @@ module MaestroDev
       write_output "Validating Inputs\n"
     end
 
-    def run
+    def execute
 
       begin
 
@@ -45,11 +44,7 @@ module MaestroDev
 
 
         failure = Cucumber::Cli::Main.execute(args)
-        if failure
-          workitem['fields']['__error__'] = "Cucumber tests failed"
-          return
-        end
-
+        puts(failure.inspect)
         console = ""
 
         write_output "Cucumber Tests Completed #{failure ? "Uns" : "S"}uccessfully\n"

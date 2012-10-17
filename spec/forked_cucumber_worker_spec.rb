@@ -2,10 +2,10 @@
 
 require 'spec_helper'
 
-describe Maestro::ForkedCucumberWorker do
+describe MaestroDev::ForkedCucumberWorker do
 
     before(:each) do
-      @test_worker = Maestro::ForkedCucumberWorker.new
+      @test_worker = MaestroDev::ForkedCucumberWorker.new
       @test_worker.stub(:write_output)
     end
 
@@ -192,7 +192,7 @@ describe Maestro::ForkedCucumberWorker do
         @test_worker.stub(:workitem => workitem)
         @test_worker.execute
 
-        workitem['fields']['__error__'].should include("Invalid rubygems versions")
+        workitem['fields']['__error__'].should eql("Invalid rubygems versions")
       end
 
 

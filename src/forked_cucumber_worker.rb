@@ -1,8 +1,8 @@
-# Copyright 2011© MaestroDev.  All rights reserved.
+# Copyright 2012© MaestroDev.  All rights reserved.
 
 require 'maestro_agent/workers/shell/shell_participant'
 
-module Maestro 
+module MaestroDev
   class ForkedCucumberWorker < Maestro::ShellParticipant
 
     attr_accessor :shell
@@ -33,7 +33,7 @@ module Maestro
     # because we want to be able to string stuff together with &&
     # can't really test the executable.
     def valid_executable?(command)
-      find_command = Shell.new
+      find_command = Maestro::Shell.new
       find_command.create_script("#{script_prefix} #{command} --version")
       find_command.run_script
       unless find_command.exit_code.success?
@@ -44,13 +44,13 @@ module Maestro
     end
     
     def update_ruby(version)
-      use = Shell.new
+      use = Maestro::Shell.new
       use.create_script("#{script_prefix}rvm use #{version}")
       use.run_script
 
       Maestro.log.debug("RVM use : #{use.to_s} #{!use.exit_code.success? or use.to_s.include?("ERROR:")}")
       if !use.exit_code.success? or use.to_s.include?("ERROR:")
-        install = Shell.new
+        install = Maestro::Shell.new
         install.create_script("rvm install #{version}")
 
         install.run_script
@@ -74,15 +74,15 @@ module Maestro
 
       return shell.exit_code, shell.to_s
     end
-    
+
     def update_rubygems(ruby_version, version)
-      
+
       return true if is_using_rubygems_version?(version)
       exit_code, result = run_update_rubygems(ruby_version, version)
-      
+
       unless exit_code.success?
         workitem['fields']['__error__'] = result
-          return false
+        return false
       end
       workitem['fields']['output'] += result
       return true
@@ -95,14 +95,14 @@ module Maestro
       
       missing += '[cucumber not installed] ' if !valid_executable?('cucumber')
       missing += '[missing path] ' if fields['path'].nil? or !File.exists? fields['path']
-      @use_rvm = Boolean(fields['use_rvm']) || false
+      @use_rvm = Boolean(fields['use_rvm'])
       if @use_rvm
         missing += '[rvm not installed] ' if !valid_executable?('rvm')
         missing += '[missing ruby_version] ' if fields['ruby_version'].nil? or fields['ruby_version'].empty?
         missing += '[missing rubygems_version]' if fields['rubygems_version'].nil? or fields['rubygems_version'].empty?
       end
       
-      @use_bundler = Boolean(fields['use_bundler']) || false
+      @use_bundler = Boolean(fields['use_bundler'])
       if @use_bundler
         missing += '[bundler not installed] ' if !valid_executable?('bundle')
       end
@@ -113,14 +113,14 @@ module Maestro
       @features = (fields['features'] || "")
       @tags = (fields['tags'] || [])
       @profile = (fields['profile'] || "")
-      @strict = Boolean(fields['strict']) || false
+      @strict = Boolean(fields['strict'])
 
 
-      if !missing.empty?
+      if missing.empty?
+        return true
+      else
         workitem['fields']['__error__'] = "ERROR missing require field(s) - #{missing}"
         return false
-      else
-        return true
       end
     end
     
@@ -130,10 +130,7 @@ module Maestro
     
     def validate_output
       output = @shell.to_s
-      if !@shell.exit_code.success?
-        workitem['fields']['__error__'] = output
-      end
-
+      workitem['fields']['__error__'] = output unless @shell.exit_code.success?
       workitem['fields']['output'] += output
     end
     
@@ -160,7 +157,7 @@ module Maestro
       end
       
       if @use_bundler
-        bundle = "#{Shell.environment_export_command} BUNDLE_GEMFILE=#{path}/Gemfile && #{Shell.environment_export_command} BUNDLE_WITHOUT="" && bundle update && bundle exec"
+        bundle = "#{Maestro::Shell.environment_export_command} BUNDLE_GEMFILE=#{path}/Gemfile && #{Maestro::Shell.environment_export_command} BUNDLE_WITHOUT="" && bundle update && bundle exec"
       end
       
       if @gems
@@ -191,8 +188,8 @@ module Maestro
 
       Maestro.log.debug "Creating Script"
       shell_command = <<-Cucumber
-      #{Shell.environment_export_command} RUBYOPT=
-      #{(workitem['fields']['environment'].nil? or workitem['fields']['environment'].empty?) ? "": "#{Shell.environment_export_command} #{workitem['fields']['environment']}" } 
+      #{Maestro::Shell.environment_export_command} RUBYOPT=
+      #{(workitem['fields']['environment'].nil? or workitem['fields']['environment'].empty?) ? "": "#{Maestro::Shell.environment_export_command} #{workitem['fields']['environment']}" }
       #{@use_rvm ? rvm : ''} type rvm | head -1 && cd #{path} &&  #{@gems ? gems_script : ''} #{@use_bundler ? bundle : ''} cucumber#{(cucumber_args.empty? ? "" : " " + cucumber_args)}
       Cucumber
 
@@ -225,7 +222,7 @@ module Maestro
           
           Maestro.log.debug "Using RubyGems Version #{workitem['fields']['rubygems_version']}"
           write_output "\nUsing RubyGems Version #{workitem['fields']['rubygems_version']}"
-          raise if !update_rubygems(workitem['fields']['ruby_version'], workitem['fields']['rubygems_version'])
+          raise unless update_rubygems(workitem['fields']['ruby_version'], workitem['fields']['rubygems_version'])
                     
         end
         

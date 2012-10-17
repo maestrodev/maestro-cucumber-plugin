@@ -8,13 +8,9 @@ gem 'zippy'
 gem 'maestro_agent', '>= 1.2.0'
 
 #dependencies
-gem 'randexp'
 gem 'cucumber'
-gem 'rspec'
-gem 'headless'
 gem 'capybara'
-gem 'capybara-webkit'
-gem 'httparty'
+gem 'rspec'
 
 group :test do
   gem 'rspec-core'

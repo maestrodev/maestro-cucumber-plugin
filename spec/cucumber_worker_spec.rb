@@ -13,12 +13,12 @@ describe MaestroDev::CucumberWorker do
     @worker.stub(:write_output) { }
   end
 
-  describe 'run()' do
+  describe 'execute()' do
 
     it "should run cucumber" do
-      @worker.should_receive(:write_output).exactly(8).times
+      @worker.should_receive(:write_output).exactly(4).times
 
-      @worker.run
+      @worker.execute
 
       @worker.args.should_not include "--strict"
       @worker.args.should_not include "--profile"
@@ -37,7 +37,7 @@ describe MaestroDev::CucumberWorker do
       @worker.args.should include "~@skip"
       @worker.args.should include "@def,@ghi"
 
-      @worker.run
+      @worker.execute
       @worker.workitem['fields']['__error__'].should be_nil
     end
 
@@ -45,25 +45,9 @@ describe MaestroDev::CucumberWorker do
       @workitem['fields']['tags'] = "123"
       @worker.should_receive(:write_output).twice
 
-      @worker.run
+      @worker.execute
 
       @worker.workitem['fields']['__error__'].should == "Cucumber tests failed gherkin.TagExpression$BadTagException: Bad tag: \"123\""
-    end
-
-    it "should use the specified profile" do
-      # Even though the profile may specify another formatter, it should also send output to the worker
-      @worker.should_receive(:write_output).exactly(8).times
-
-      testprofile = "testprofile"
-      @workitem['fields']['profile'] = testprofile
-
-      @worker.setup
-      @worker.args.should include "--profile"
-      @worker.args.should include testprofile
-
-      @worker.run
-      @worker.workitem['fields']['__error__'].should be_nil
-
     end
 
     it "should be strict when specified" do
@@ -72,7 +56,7 @@ describe MaestroDev::CucumberWorker do
       @worker.setup
       @worker.args.should include "--strict"
 
-      @worker.run
+      @worker.execute
       @worker.workitem['fields']['__error__'].should be_nil
 
     end
