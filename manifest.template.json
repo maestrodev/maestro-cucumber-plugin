@@ -3,7 +3,7 @@
     "description" : "Run Cucumber tests within the agent process.<br>[features] The directory or file containing the features.<br>[tags] Only execute the features or scenarios with matching tags<br>[strict] enable/disable strict mode<br>",
     "license" : "Apache 2.0",
     "author": "Etienne Pelletier",
-    "version": "1.0-SNAPSHOT",
+    "version": "updated at build time",
     "class": "MaestroDev::CucumberWorker",
     "type":"ruby",
     "dependencies":[
@@ -32,7 +32,7 @@
     "description" : "Run Cucumber tests in a forked process.<br>[path] the path from which to run cucumber.<br>[use_rvm] tell the agent to use rvm.<br>[ruby_version] the version of ruby to use.<br>[rubygems_version] the version of rubygems to use.<br>[use_bundler] tell the agent to use bundler (bundle exec).<br>[environment] environment variables.<br>[features] The directory or file containing the features.<br>[tags] Only execute the features or scenarios with matching tags<br>[profile] the cucumber profile to use as defined in cucumber.yml<br>[strict] enable/disable strict mode<br>",
     "license" : "Apache 2.0",
     "author": "Etienne Pelletier",
-    "version": "1.0-SNAPSHOT",
+    "version": "updated at build time",
     "class": "MaestroDev::ForkedCucumberWorker",
     "type":"ruby",
     "dependencies":[
