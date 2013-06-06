@@ -1,8 +1,9 @@
-# Copyright 2012© MaestroDev.  All rights reserved.
+# Copyright 2012 MaestroDev.  All rights reserved.
 require 'rubygems'
 require 'maestro_agent'
 require 'cucumber/cli/main'
 require 'maestro_formatter'
+require 'iconv'
 
 module MaestroDev
 

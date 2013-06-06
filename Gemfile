@@ -1,4 +1,4 @@
-source :rubygems
+source "https://rubygems.org"
 
 gem 'maestro_agent', '>= 1.2.0'
 
@@ -8,7 +8,7 @@ gem 'capybara'
 gem 'rspec'
 
 group :development do
-  gem 'rake', '~>0.9.2'
+  gem 'rake', '>=0.9.2'
   gem 'nokogiri'
   gem 'git'
   gem 'zippy'

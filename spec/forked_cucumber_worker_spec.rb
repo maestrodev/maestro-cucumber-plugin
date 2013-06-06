@@ -1,4 +1,4 @@
-# Copyright 2011© MaestroDev.  All rights reserved.
+# Copyright 2011 MaestroDev.  All rights reserved.
 
 require 'spec_helper'
 

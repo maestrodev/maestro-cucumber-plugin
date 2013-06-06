@@ -42,12 +42,12 @@ describe MaestroDev::CucumberWorker do
     end
 
     it "should fail with bad tags" do
-      @workitem['fields']['tags'] = "123"
+      @workitem['fields']['tags'] = ["123"]
       @worker.should_receive(:write_output).twice
 
       @worker.execute
 
-      @worker.workitem['fields']['__error__'].should == "Cucumber tests failed gherkin.TagExpression$BadTagException: Bad tag: \"123\""
+      @worker.workitem['fields']['__error__'].should match(%r{Cucumber tests failed.* Bad tag: "123"})
     end
 
     it "should be strict when specified" do

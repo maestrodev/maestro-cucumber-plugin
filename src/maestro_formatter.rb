@@ -1,4 +1,4 @@
-# Copyright 2012© MaestroDev.  All rights reserved.
+# Copyright 2012 MaestroDev.  All rights reserved.
 require 'cucumber/formatter/progress'
 
 module Cucumber

@@ -1,4 +1,4 @@
-# Copyright 2012© MaestroDev.  All rights reserved.
+# Copyright 2012 MaestroDev.  All rights reserved.
 
 require 'maestro_agent/workers/shell/shell_participant'
 
@@ -178,7 +178,8 @@ module MaestroDev
       cucumber_opts.push("--profile", @profile) unless @profile.empty?
       cucumber_opts.push("--strict") if @strict
 
-      cucumber_opts = (cucumber_opts + feature_files(@features)).flatten.compact
+      cucumber_opts.push(feature_files(@features))
+      cucumber_opts = cucumber_opts.flatten.compact
       cucumber_args = ""
 
       cucumber_opts.each do |opt|
@@ -253,11 +254,11 @@ module MaestroDev
     end
 
     def feature_files(features) #:nodoc:
-      make_command_line_safe((features || []))
+      features ? make_command_line_safe(features) : ""
     end
 
-    def make_command_line_safe(list)
-      list.map{|string| string.gsub(' ', '\ ')}
+    def make_command_line_safe(features)
+      features.gsub(' ', '\ ')
     end
 
   end
