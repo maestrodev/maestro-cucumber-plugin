@@ -1,9 +1,10 @@
 source "https://rubygems.org"
 
-gem 'maestro_agent', '>= 1.2.0'
+gem 'maestro_plugin', '>= 0.0.17'
+gem 'maestro_shell', '>=0.0.8'
 
 #dependencies
-gem 'cucumber'
+gem 'cucumber', "=1.2.1" # Note, something happened in 1.2.2 that breaks things
 gem 'capybara'
 gem 'rspec'
 

@@ -1,10 +1,12 @@
-[{
+{
+  "image": "cucumber.png",
+  "tasks": [{
     "name" : "cucumber (in-process)",
     "description" : "Run Cucumber tests within the agent process.<br>[features] The directory or file containing the features.<br>[tags] Only execute the features or scenarios with matching tags<br>[strict] enable/disable strict mode<br>",
     "license" : "Apache 2.0",
     "author": "Etienne Pelletier",
     "version": "updated at build time",
-    "class": "MaestroDev::CucumberWorker",
+    "class": "MaestroDev::Plugin::CucumberWorker",
     "type":"ruby",
     "dependencies":[
     {
@@ -33,7 +35,7 @@
     "license" : "Apache 2.0",
     "author": "Etienne Pelletier",
     "version": "updated at build time",
-    "class": "MaestroDev::ForkedCucumberWorker",
+    "class": "MaestroDev::Plugin::ForkedCucumberWorker",
     "type":"ruby",
     "dependencies":[
       {
@@ -64,3 +66,4 @@
     "source_types": [
     ]
   }]
+}

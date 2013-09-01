@@ -33,6 +33,9 @@ module Cucumber
         @output_buffer.each do |part|
           output += part
         end
+
+        output = Iconv.new('US-ASCII//IGNORE', 'UTF-8').iconv(output)
+
         @@worker.write_output output
         @output_buffer = []
       end
