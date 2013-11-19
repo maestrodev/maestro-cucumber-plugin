@@ -4,7 +4,7 @@
 
   <groupId>com.maestrodev.maestro.plugins</groupId>
   <artifactId>maestro-cucumber-plugin</artifactId>
-  <version>1.1</version>
+  <version>1.2-SNAPSHOT</version>
   <name>maestro-cucumber-plugin</name>
   <packaging>pom</packaging>
 
